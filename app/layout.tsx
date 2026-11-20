@@ -53,6 +53,9 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true },
   },
   alternates: { canonical: '/' },
+  verification: {
+    google: 'D3wGYjugyQFUd55tKSeFTKvKM9pgjEN0DYWoBu4KwFs',
+  },
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
