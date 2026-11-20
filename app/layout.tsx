@@ -54,7 +54,11 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: '/' },
   verification: {
-    google: ['D3wGYjugyQFUd55tKSeFTKvKM9pgjEN0DYWoBu4KwFs', 's3-KZAqBNJLrxMIPpBhHu2aS-vNUxgmwcii_NDFTCgc'],
+    google: [
+      'D3wGYjugyQFUd55tKSeFTKvKM9pgjEN0DYWoBu4KwFs',
+      's3-KZAqBNJLrxMIPpBhHu2aS-vNUxgmwcii_NDFTCgc',
+      'mh-JuiEedF_khG07LU6-KmqoyJ2mETO4x-q22HUSMbo',
+    ],
   },
   manifest: '/manifest.webmanifest',
   icons: {
