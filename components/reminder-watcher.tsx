@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { playNotificationSound } from '@/lib/notification-sounds';
 
 type ReminderPayload = {
   today?: string;
@@ -11,6 +12,7 @@ type ReminderPayload = {
 
 async function showNotification(title: string, body: string) {
   toast(title, { description: body });
+  playNotificationSound();
   try {
     if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
     const registration = await navigator.serviceWorker?.getRegistration?.();
@@ -33,6 +35,15 @@ async function showNotification(title: string, body: string) {
 /** Checks due reminders while the app is open and raises a notification once per item. */
 export function ReminderWatcher({ userId }: { userId: string }) {
   const seen = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'pl:push') playNotificationSound();
+    };
+    navigator.serviceWorker.addEventListener('message', onMessage);
+    return () => navigator.serviceWorker.removeEventListener('message', onMessage);
+  }, []);
 
   useEffect(() => {
     if (!userId) return;

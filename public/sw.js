@@ -94,12 +94,19 @@ self.addEventListener('push', (event) => {
     // keep the default payload
   }
   event.waitUntil(
-    self.registration.showNotification(payload.title, {
-      body: payload.body,
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
-      data: { url: '/ozet' },
-    }),
+    (async () => {
+      await self.registration.showNotification(payload.title, {
+        body: payload.body,
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
+        data: { url: '/ozet' },
+      });
+      // let an open tab play the user's chosen in-app ringtone
+      const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      for (const client of clients) {
+        client.postMessage({ type: 'pl:push' });
+      }
+    })(),
   );
 });
 

@@ -13,6 +13,7 @@ import {
   ListChecks,
   LogOut,
   NotebookPen,
+  Settings,
   Wallet,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -137,6 +138,11 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
                   <p className="truncate text-xs font-normal text-muted-foreground">{user?.email ?? ''}</p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/ayarlar" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" /> Ayarlar
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/notlar" className="cursor-pointer">
                     <NotebookPen className="mr-2 h-4 w-4" /> Notlar

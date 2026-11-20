@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Bell, BellRing, Check, Clock, Loader2, RefreshCw, Smartphone } from 'lucide-react';
+import Link from 'next/link';
+import { Bell, BellRing, Check, Clock, Loader2, RefreshCw, Smartphone, Volume2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { PageIntro } from '@/components/app-shell';
@@ -119,6 +120,11 @@ export function RemindersView() {
           <Smartphone className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           İpucu: uygulamayı ana ekranına eklediğinde bildirimler daha güvenilir çalışır.
         </p>
+        <Button asChild variant="link" className="mt-1 h-auto px-0 text-xs">
+          <Link href="/ayarlar" className="gap-1">
+            <Volume2 className="h-3.5 w-3.5" /> Zil sesi ve düzeyini ayarla
+          </Link>
+        </Button>
       </div>
 
       {loading ? (
