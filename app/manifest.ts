@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: 'Planned Life',
     description:
       'Giderlerini takip et, bütçeni yönet, sağlık rutinlerini planla, görevlerini ve notlarını tek yerde tut.',
-    start_url: '/',
+    start_url: '/ozet',
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',

@@ -48,7 +48,7 @@ export function SignupForm() {
         return;
       }
 
-      window.location.assign('/');
+      window.location.assign('/ozet');
     } catch {
       setError('Bağlantı kurulamadı. İnternet bağlantınızı kontrol edin.');
       setLoading(false);

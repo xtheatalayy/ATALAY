@@ -20,7 +20,7 @@ async function showNotification(title: string, body: string) {
         icon: '/icon-192.png',
         badge: '/icon-192.png',
         tag: `${title}-${body}`.slice(0, 60),
-        data: { url: '/' },
+        data: { url: '/ozet' },
       });
     } else {
       new Notification(title, { body, icon: '/icon-192.png' });

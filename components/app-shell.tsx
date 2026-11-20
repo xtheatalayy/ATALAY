@@ -32,7 +32,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const NAV_ITEMS = [
-  { href: '/', label: 'Özet', icon: LayoutDashboard },
+  { href: '/ozet', label: 'Özet', icon: LayoutDashboard },
   { href: '/giderler', label: 'Giderler', icon: Wallet },
   { href: '/asistan', label: 'Asistan', icon: Bot },
   { href: '/saglik', label: 'Sağlık', icon: HeartPulse },
@@ -95,7 +95,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
 
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center justify-between gap-2 px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <Link href="/ozet" className="flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <span className="grid h-8 w-8 place-items-center rounded-[10px] bg-primary text-primary-foreground shadow-sm">
               <Leaf className="h-4 w-4" />
             </span>
@@ -166,7 +166,7 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/90 backdrop-blur-xl">
         <div className="mx-auto grid w-full max-w-[560px] grid-cols-5 gap-0.5 px-2 pt-2 pb-[max(env(safe-area-inset-bottom),8px)]">
           {NAV_ITEMS.map((item) => {
-            const active = item.href === '/' ? pathname === '/' : pathname?.startsWith(item.href);
+            const active = pathname === item.href || pathname?.startsWith(`${item.href}/`);
             const Icon = item.icon;
             return (
               <Link

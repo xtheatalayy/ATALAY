@@ -8,7 +8,16 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: ['/', '/giris', '/kayit'],
-        disallow: ['/api/', '/asistan', '/giderler', '/gorevler', '/saglik', '/notlar', '/hatirlaticilar'],
+        disallow: [
+          '/api/',
+          '/ozet',
+          '/asistan',
+          '/giderler',
+          '/gorevler',
+          '/saglik',
+          '/notlar',
+          '/hatirlaticilar',
+        ],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
