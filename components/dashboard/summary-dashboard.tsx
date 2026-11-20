@@ -6,6 +6,7 @@ import { ArrowRight, HeartPulse, ListChecks, NotebookPen, Wallet } from 'lucide-
 import { AbacusDashboard, useDashboardData } from '@/components/viz/abacus-dashboard';
 import { buildSummaryManifest } from '@/lib/dashboard-manifest';
 import { Skeleton } from '@/components/ui/skeleton';
+import { HomeCalendar } from '@/components/dashboard/home-calendar';
 
 const QUICK_LINKS = [
   { href: '/giderler', label: 'Gider ekle', icon: Wallet },
@@ -42,6 +43,8 @@ export function SummaryDashboard({ userName, todayKey }: { userName: string; tod
         </div>
       </div>
 
+      <HomeCalendar variant="widget" todayKey={todayKey} />
+
       {!hasData ? (
         error ? (
           <div className="rounded-2xl bg-card p-6 text-center shadow-sm">
@@ -73,6 +76,8 @@ export function SummaryDashboard({ userName, todayKey }: { userName: string; tod
       ) : (
         <AbacusDashboard manifest={manifest} data={data} dataAsOf={dataAsOf} className="min-h-[420px]" />
       )}
+
+      <HomeCalendar variant="full" todayKey={todayKey} />
     </div>
   );
 }

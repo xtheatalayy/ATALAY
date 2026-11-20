@@ -5,7 +5,7 @@ import { localDayKey } from '@/lib/dates';
 
 export const metadata: Metadata = {
   title: 'Özet',
-  description: 'Bu ayın giderleri, bugünün rutinleri, açık görevler ve son notlar tek ekranda.',
+  description: 'Bu ayın giderleri, bugünün rutinleri, açık görevler ve hedeflerin–planların takvimi tek ekranda.',
 };
 
 export const dynamic = 'force-dynamic';
