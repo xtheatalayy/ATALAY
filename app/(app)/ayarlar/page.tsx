@@ -14,5 +14,5 @@ export default async function SettingsPage() {
   const session = await auth();
   if (!session?.user?.id) redirect('/giris');
 
-  return <SettingsView />;
+  return <SettingsView name={session.user.name ?? null} email={session.user.email ?? null} />;
 }

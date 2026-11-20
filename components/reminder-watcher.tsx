@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { isMuted } from '@/lib/notification-prefs';
 import { playNotificationSound } from '@/lib/notification-sounds';
 
 type ReminderPayload = {
@@ -11,6 +12,7 @@ type ReminderPayload = {
 };
 
 async function showNotification(title: string, body: string) {
+  if (isMuted()) return;
   toast(title, { description: body });
   playNotificationSound();
   try {
@@ -39,7 +41,7 @@ export function ReminderWatcher({ userId }: { userId: string }) {
   useEffect(() => {
     if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
     const onMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'pl:push') playNotificationSound();
+      if (event.data?.type === 'pl:push' && !isMuted()) playNotificationSound();
     };
     navigator.serviceWorker.addEventListener('message', onMessage);
     return () => navigator.serviceWorker.removeEventListener('message', onMessage);

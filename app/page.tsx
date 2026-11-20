@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import { auth } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
 
 export const metadata: Metadata = {
@@ -83,7 +82,6 @@ export default async function LandingPage() {
 
           <div className="flex items-center gap-1.5">
             <LanguageSwitcher />
-            <ThemeToggle />
             {signedIn ? (
               <Button asChild size="sm" className="ms-1">
                 <Link href="/ozet">Uygulamaya git</Link>

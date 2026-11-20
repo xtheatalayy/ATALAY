@@ -104,12 +104,24 @@ export const viewport: Viewport = {
 
 export const dynamic = 'force-dynamic';
 
+const THEME_COOKIE = 'pl_theme';
+const THEME_IDS = ['green', 'red', 'black', 'blue'] as const;
+type ThemeId = (typeof THEME_IDS)[number];
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const locale = cookieStore.get(LOCALE_COOKIE)?.value || DEFAULT_LOCALE;
+  const themeCookie = cookieStore.get(THEME_COOKIE)?.value;
+  const theme: ThemeId = THEME_IDS.includes(themeCookie as ThemeId) ? (themeCookie as ThemeId) : 'green';
 
   return (
-    <html lang={locale} dir={isRtl(locale) ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={isRtl(locale) ? 'rtl' : 'ltr'}
+      data-theme={theme}
+      className={theme === 'black' ? 'dark' : undefined}
+      suppressHydrationWarning
+    >
       <body className={`${dmSans.variable} ${jakartaSans.variable} ${jetbrainsMono.variable} font-sans`}>
         <script
           type="application/ld+json"
@@ -126,7 +138,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             }),
           }}
         />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider initialTheme={theme}>
           <AppProviders>
             <LanguageProvider initialLocale={locale}>
               {children}

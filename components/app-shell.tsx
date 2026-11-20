@@ -2,34 +2,17 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { signOut } from 'next-auth/react';
 import {
-  Bell,
   Bot,
   HeartPulse,
   LayoutDashboard,
   Leaf,
   ListChecks,
-  LogOut,
-  NotebookPen,
-  Settings,
   Wallet,
 } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/i18n/language-switcher';
 import { InstallPrompt } from '@/components/install-prompt';
-import { PushToggle } from '@/components/push-toggle';
 import { ReminderWatcher } from '@/components/reminder-watcher';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 
 const NAV_ITEMS = [
@@ -48,39 +31,6 @@ export type ShellUser = {
 
 export function AppShell({ user, children }: { user: ShellUser; children: React.ReactNode }) {
   const pathname = usePathname();
-  const [dueCount, setDueCount] = useState(0);
-
-  useEffect(() => {
-    let alive = true;
-    const load = async () => {
-      try {
-        const res = await fetch('/api/reminders', { cache: 'no-store' });
-        if (!res.ok) return;
-        const data = (await res.json()) as {
-          routines?: { time: string | null; doneToday: boolean }[];
-          todos?: { reminderAt: string | null }[];
-        };
-        if (!alive) return;
-        const now = new Date();
-        const hhmm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-        const routines = (data?.routines ?? []).filter((r) => r?.time && !r.doneToday && String(r.time) <= hhmm).length;
-        const todos = (data?.todos ?? []).filter((t) => {
-          if (!t?.reminderAt) return false;
-          const when = new Date(t.reminderAt);
-          return !Number.isNaN(when.getTime()) && when.getTime() <= now.getTime();
-        }).length;
-        setDueCount(routines + todos);
-      } catch {
-        // offline: keep the last known count
-      }
-    };
-    void load();
-    const id = window.setInterval(load, 120_000);
-    return () => {
-      alive = false;
-      window.clearInterval(id);
-    };
-  }, [pathname]);
 
   const initials = (user?.name ?? user?.email ?? 'PL')
     .split(' ')
@@ -107,62 +57,15 @@ export function AppShell({ user, children }: { user: ShellUser; children: React.
 
           <div className="flex items-center gap-1">
             <InstallPrompt />
-            <PushToggle />
-            <Link
-              href="/hatirlaticilar"
-              aria-label="Hatırlatıcılar"
-              className="relative grid h-9 w-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <Bell className="h-[18px] w-[18px]" />
-              {dueCount > 0 ? (
-                <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-primary px-1 text-[10px] font-semibold leading-none text-primary-foreground">
-                  {dueCount > 9 ? '9+' : dueCount}
-                </span>
-              ) : null}
-            </Link>
             <LanguageSwitcher />
-            <ThemeToggle />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  type="button"
-                  aria-label="Hesap menüsü"
-                  className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-[11px] font-semibold text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {initials || 'PL'}
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="space-y-0.5">
-                  <p className="truncate text-sm font-medium">{user?.name ?? 'Hesabım'}</p>
-                  <p className="truncate text-xs font-normal text-muted-foreground">{user?.email ?? ''}</p>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/ayarlar" className="cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" /> Ayarlar
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/notlar" className="cursor-pointer">
-                    <NotebookPen className="mr-2 h-4 w-4" /> Notlar
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/hatirlaticilar" className="cursor-pointer">
-                    <Bell className="mr-2 h-4 w-4" /> Hatırlatıcılar
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer text-destructive focus:text-destructive"
-                  onSelect={() => {
-                    void signOut({ redirectTo: '/giris' });
-                  }}
-                >
-                  <LogOut className="mr-2 h-4 w-4" /> Çıkış yap
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Link
+              href="/ayarlar"
+              aria-label="Ayarlar"
+              title={user?.email ?? 'Ayarlar'}
+              className="grid h-9 w-9 place-items-center rounded-full bg-secondary text-[11px] font-semibold text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              {initials || 'PL'}
+            </Link>
           </div>
         </div>
       </header>
