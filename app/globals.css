@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 32% 97%;
+    --foreground: 165 35% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 165 35% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 165 35% 10%;
+
+    --primary: 161 84% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 152 38% 93%;
+    --secondary-foreground: 165 40% 16%;
+
+    --muted: 150 22% 94%;
+    --muted-foreground: 165 12% 40%;
+
+    --accent: 152 48% 91%;
+    --accent-foreground: 165 45% 16%;
+
+    --destructive: 0 72% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 150 20% 89%;
+    --input: 150 20% 88%;
+    --ring: 161 84% 25%;
+
+    --radius: 0.875rem;
+    --radius-sm: calc(0.875rem - 4px);
+    --radius-lg: calc(0.875rem + 4px);
+    --radius-full: 9999px;
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+    --spacing-3xl: 64px;
+
+    --shadow-sm: 0 1px 2px 0 rgb(6 46 36 / 0.04), 0 1px 3px 0 rgb(6 46 36 / 0.05);
+    --shadow-md: 0 6px 16px -6px rgb(6 46 36 / 0.12), 0 2px 6px -2px rgb(6 46 36 / 0.06);
+    --shadow-lg: 0 18px 40px -18px rgb(6 46 36 / 0.22), 0 6px 14px -6px rgb(6 46 36 / 0.08);
+
+    --duration-fast: 150ms;
+    --duration-normal: 250ms;
+    --duration-slow: 350ms;
+
+    --chart-1: 161 84% 27%;
+    --chart-2: 42 92% 50%;
+    --chart-3: 199 80% 45%;
+    --chart-4: 265 60% 62%;
+    --chart-5: 12 80% 58%;
+  }
+
+  .dark {
+    --background: 168 30% 6%;
+    --foreground: 150 20% 96%;
+
+    --card: 168 22% 10%;
+    --card-foreground: 150 20% 96%;
+
+    --popover: 168 22% 11%;
+    --popover-foreground: 150 20% 96%;
+
+    --primary: 158 62% 45%;
+    --primary-foreground: 168 45% 8%;
+
+    --secondary: 168 16% 16%;
+    --secondary-foreground: 150 20% 94%;
+
+    --muted: 168 16% 15%;
+    --muted-foreground: 155 12% 66%;
+
+    --accent: 168 20% 19%;
+    --accent-foreground: 150 25% 94%;
+
+    --destructive: 0 62% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 168 14% 19%;
+    --input: 168 14% 20%;
+    --ring: 158 62% 45%;
+
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.35), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 6px 18px -8px rgb(0 0 0 / 0.55), 0 2px 6px -2px rgb(0 0 0 / 0.35);
+    --shadow-lg: 0 20px 44px -20px rgb(0 0 0 / 0.7), 0 8px 18px -8px rgb(0 0 0 / 0.4);
+
+    --chart-1: 158 62% 45%;
+    --chart-2: 42 88% 58%;
+    --chart-3: 199 78% 55%;
+    --chart-4: 265 62% 68%;
+    --chart-5: 12 78% 62%;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.18);
+    color: hsl(var(--primary));
+  }
+
+  * { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+  *:hover { scrollbar-color: hsl(var(--border)) transparent; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-thumb { background-color: transparent; border-radius: 9999px; }
+  :hover::-webkit-scrollbar-thumb { background-color: hsl(var(--border)); }
+  ::-webkit-scrollbar-thumb:hover { background-color: hsl(var(--muted-foreground) / 0.5); }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] { -moz-appearance: textfield; }
+}
+
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+  .safe-top { padding-top: env(safe-area-inset-top); }
+
+  .page-glow {
+    background:
+      radial-gradient(ellipse 70% 55% at 12% -10%, hsl(161 84% 30% / 0.14), transparent 70%),
+      radial-gradient(ellipse 55% 45% at 92% 0%, hsl(152 60% 45% / 0.12), transparent 70%);
+  }
+
+  .dark .page-glow {
+    background:
+      radial-gradient(ellipse 70% 55% at 12% -10%, hsl(158 62% 40% / 0.22), transparent 70%),
+      radial-gradient(ellipse 55% 45% at 92% 0%, hsl(170 60% 40% / 0.16), transparent 70%);
+  }
+
+  .surface-card {
+    background-color: hsl(var(--card));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .text-balance { text-wrap: balance; }
+}

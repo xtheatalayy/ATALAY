@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.vercel/
+.env*
+!.env.example
+*.log
+.DS_Store
+*.tsbuildinfo
+.yarn/cache
+.yarn/unplugged
+.pnp.*
+
+.yarn/install-state.gz
