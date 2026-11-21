@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { ChunkLoadErrorHandler } from '@/components/chunk-load-error-handler';
 import { AppProviders } from '@/components/app-providers';
 import { ServiceWorkerRegister } from '@/components/service-worker-register';
+import { Analytics } from '@vercel/analytics/next';
 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-sans' });
 const jakartaSans = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-display' });
@@ -150,6 +151,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </LanguageProvider>
           </AppProviders>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
